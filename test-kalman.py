@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from kalman import KalmanFilter
+from Kalman import KalmanFilter
+from EnsembleKalman import EnsembleKalmanFilter
 import pdb
 
 
@@ -39,21 +40,24 @@ def generateYZ( seed, T, M, H, sig_w = 1, sig_eps = 0.5):
 if __name__=="__main__":
 
     T = 100
-    A = 0.5*np.matrix(np.eye(2))
-    H = np.matrix(np.eye(2))
+    Ndim = 2
+    A = 0.5*np.matrix(np.eye(Ndim))
+    H = np.matrix(np.eye(Ndim))
+
 
     y, z = generateYZ( 1988, T, A, H )
 
-    KF = KalmanFilter(A, H, np.matrix(np.eye(2)), 0.5*np.matrix(np.eye(2)), x_0=np.zeros(2), u_0=np.zeros(2))
+    KF = KalmanFilter(A, H, np.matrix(np.eye(Ndim)), 0.5*np.matrix(np.eye(Ndim)), x_0=np.zeros(Ndim), u_0=np.zeros(Ndim))
+    KF = EnsembleKalmanFilter(A, H, np.matrix(np.eye(Ndim)), 0.5*np.matrix(np.eye(Ndim)), x_0=np.zeros(Ndim))
 
     y_filtered = KF.filtr(z)
 
     pdb.set_trace()
 
 
-    plt.plot(y, 'b-')#, label="true process (y)")
-    plt.plot(z, 'r--')#, label="measurements (z)")
-    plt.plot(y_filtered, 'k-')#, label="KF prediction")
+    plt.plot(y[:,0], 'b-')#, label="true process (y)")
+    plt.plot(z[:,0], 'r--')#, label="measurements (z)")
+    plt.plot(y_filtered[:,0], 'k-')#, label="KF prediction")
     plt.legend(["true process (y)", "measurements (z)", "KF prediction"])
     plt.show()
 
