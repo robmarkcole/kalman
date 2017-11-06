@@ -30,6 +30,10 @@ var/
 *.manifest
 *.spec
 
+# Emacs Auxiliary files
+*~
+
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

@@ -26,7 +26,7 @@ def generateYZ( seed, T, M, H, sig_w = 1, sig_eps = 0.5):
     y = np.zeros([T, dim])
     z = np.zeros([T, dim])
 
-    for t in xrange(T):
+    for t in range(T):
         y[t] = np.dot(M,y[t-1]) + w[t]
         z[t] = np.dot(H,y[t]) + eps[t]
 
@@ -51,8 +51,6 @@ if __name__=="__main__":
     KF = EnsembleKalmanFilter(A, H, np.matrix(np.eye(Ndim)), 0.5*np.matrix(np.eye(Ndim)), x_0=np.zeros(Ndim))
 
     y_filtered = KF.filtr(z)
-
-    pdb.set_trace()
 
 
     plt.plot(y[:,0], 'b-')#, label="true process (y)")
